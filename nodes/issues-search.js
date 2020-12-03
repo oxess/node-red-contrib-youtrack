@@ -2,6 +2,8 @@ module.exports = function(RED) {
     function IssuesSearchNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
+
+        var Youtrack = require('youtrack-rest-client');
         var youtrack = new Youtrack({
             baseUrl: config.server.host,
             token: config.server.token
