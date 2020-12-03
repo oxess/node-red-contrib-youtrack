@@ -3,6 +3,8 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
+        console.log(config.server);
+
         var { Youtrack } = require('youtrack-rest-client');
         var youtrack = new Youtrack({
             baseUrl: config.server.host,
