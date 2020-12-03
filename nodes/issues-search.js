@@ -2,11 +2,16 @@ module.exports = function(RED) {
     function IssuesSearchNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
+        var youtrack = new Youtrack({
+            baseUrl: config.server.host,
+            token: config.server.token
+        });
 
         node.on('input', function(msg) {
-            // msg.payload = msg.payload.toLowerCase();
-
-            node.send(msg);
+            youtrack.issues.search(config.query).then(issues => {
+                msg.issues = {issues};
+                node.send(msg);
+            });
         });
     }
 
