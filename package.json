@@ -25,7 +25,8 @@
   },
   "node-red" : {
     "nodes": {
-      "issues-search": "nodes/issues-search.js"
+      "issues-search": "nodes/issues-search.js",
+      "youtrack-server": "nodes/youtrack-server.js"
     }
   }
 }
