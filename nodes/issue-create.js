@@ -16,7 +16,7 @@ module.exports = function(RED) {
             }
 
             this.youtrack.issues.create(msg.payload).then(issue => {
-                msg.issue = {issue};
+                msg.issue = issue;
                 this.send(msg);
             });
         });

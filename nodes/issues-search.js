@@ -11,7 +11,7 @@ module.exports = function(RED) {
 
         this.on('input', (msg) => {
             this.youtrack.issues.search(config.query).then(issues => {
-                msg.issues = {issues};
+                msg.issues = issues;
                 this.send(msg);
             });
         });
