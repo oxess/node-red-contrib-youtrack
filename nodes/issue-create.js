@@ -10,7 +10,7 @@ module.exports = function(RED) {
         });
 
         this.on('input', (msg) => {
-            if (!msg.hasOwnProperty('issueId')) {
+            if (!msg.hasOwnProperty('payload')) {
                 this.error("Node require msg.payload data");
                 this.status({ fill: "red", shape: "ring", text: "Uncompleted request data"});
 
