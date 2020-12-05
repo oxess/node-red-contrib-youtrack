@@ -1,2 +1,4 @@
 .idea
+run.sh
 node_modules
+node_red_data

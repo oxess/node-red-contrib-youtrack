@@ -1,8 +1,7 @@
 module.exports = function(RED) {
     function IssuesSearchNode(config) {
         RED.nodes.createNode(this, config);
-        var { Youtrack } = require('youtrack-rest-client');
-        var node = this;
+        let { Youtrack } = require('youtrack-rest-client');
 
         this.server = RED.nodes.getNode(config.server);
         this.youtrack = new Youtrack({
@@ -10,10 +9,10 @@ module.exports = function(RED) {
             token: this.server.token
         });
 
-        node.on('input', (msg) => {
+        this.on('input', (msg) => {
             this.youtrack.issues.search(config.query).then(issues => {
                 msg.issues = {issues};
-                node.send(msg);
+                this.send(msg);
             });
         });
     }
