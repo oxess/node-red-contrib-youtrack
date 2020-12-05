@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    RED.nodes.registerType('issue-update', {
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            server: { value: "", type: "youtrack-server" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "file.png",
+        label: function() {
+            return this.name || "Issue update";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="issue-update">
+    <div class="form-row">
+        <label for="node-input-server"><i class="icon-tag"></i> Server</label>
+        <select id="node-input-server"></select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="issue-update">
+    <p>Update issue in YouTrack with data from payload</p>
+</script>
