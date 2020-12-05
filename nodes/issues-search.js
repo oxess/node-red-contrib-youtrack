@@ -10,7 +10,13 @@ module.exports = function(RED) {
         });
 
         this.on('input', (msg) => {
-            this.youtrack.issues.search(config.query).then(issues => {
+            let queryString = config.query;
+
+            if (queryString.trim() === "") {
+                queryString = msg.payload;
+            }
+
+            this.youtrack.issues.search(queryString).then(issues => {
                 msg.issues = issues;
                 this.send(msg);
             });
