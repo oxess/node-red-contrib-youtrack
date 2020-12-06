@@ -9,20 +9,17 @@ module.exports = function(RED) {
             token: this.server.token
         });
 
-        this.on('input', (msg) => {
-            if (!msg.hasOwnProperty('issueId')) {
-                this.error("Node require msg.issueId");
-                this.status({ fill: "red", shape: "ring", text: "Uncompleted request data"});
-
-                return;
+        this.on('input', (msg, send, done) => {
+            if ('issueId' in msg) {
+                this.youtrack.comments.create(msg.issueId, { text: msg.payload }).then(issue => {
+                    send({ issue, ...msg });
+                    done();
+                }).catch(err => {
+                    done(err);
+                });
+            } else {
+                done({ msg: 'This node need to issue id in msg.issueId' });
             }
-
-            let issueId = msg.issueId;
-
-            this.youtrack.comments.create(issueId, { text: msg.payload }).then(issue => {
-                msg.issue = issue;
-                this.send(msg);
-            });
         });
     }
 

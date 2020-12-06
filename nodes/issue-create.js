@@ -9,18 +9,17 @@ module.exports = function(RED) {
             token: this.server.token
         });
 
-        this.on('input', (msg) => {
-            if (!msg.hasOwnProperty('payload')) {
-                this.error("Node require msg.payload data");
-                this.status({ fill: "red", shape: "ring", text: "Uncompleted request data"});
-
-                return;
+        this.on('input', (msg, send, done) => {
+            if ('payload' in msg) {
+                this.youtrack.issues.create(msg.payload).then(issue => {
+                    send({ issue, ...msg });
+                    done();
+                }).catch(err => {
+                    done(err);
+                });
+            } else {
+                done({ msg: 'This node need to request data in payload' });
             }
-
-            this.youtrack.issues.create(msg.payload).then(issue => {
-                msg.issue = issue;
-                this.send(msg);
-            });
         });
     }
 

@@ -9,17 +9,19 @@ module.exports = function(RED) {
             token: this.server.token
         });
 
-        this.on('input', (msg) => {
-            let queryString = config.query;
+        this.on('input', (msg, send, done) => {
+            let queryString = config.query || msg.payload;
 
-            if (queryString.trim() === "") {
-                queryString = msg.payload;
+            if (queryString) {
+                this.youtrack.issues.search(queryString).then(issues => {
+                    send({ ...msg, issues });
+                    done();
+                }).catch(err => {
+                    done(err);
+                });
+            } else {
+                done({ msg: 'This node require query from payload or config' });
             }
-
-            this.youtrack.issues.search(queryString).then(issues => {
-                msg.issues = issues;
-                this.send(msg);
-            });
         });
     }
 

@@ -9,16 +9,17 @@ module.exports = function(RED) {
             token: this.server.token
         });
 
-        this.on('input', (msg) => {
-            if (!msg.hasOwnProperty('payload')) {
-                this.state({ color: 'red', msg: 'Don\' payload send!' });
-                return;
+        this.on('input', (msg, send, done) => {
+            if ('payload' in msg) {
+                this.youtrack.issues.update(msg.payload).then(issue => {
+                    send({ issue, ...msg });
+                    done();
+                }).catch(err => {
+                    done(err);
+                });
+            } else {
+                done({ msg: 'This node need to request data in payload' });
             }
-
-            this.youtrack.issues.update(msg.payload).then(issue => {
-                msg.issue = issue;
-                this.send(msg);
-            });
         });
     }
 
