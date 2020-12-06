@@ -20,7 +20,7 @@ module.exports = function(RED) {
                     done(err);
                 });
             } else {
-                done({ msg: 'This node require query from payload or config' });
+                done('This node require query from payload or config');
             }
         });
     }

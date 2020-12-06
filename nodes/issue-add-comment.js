@@ -18,7 +18,7 @@ module.exports = function(RED) {
                     done(err);
                 });
             } else {
-                done({ msg: 'This node need to issue id in msg.issueId' });
+                done('This node need to issue id in msg.issueId');
             }
         });
     }

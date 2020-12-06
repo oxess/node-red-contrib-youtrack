@@ -18,7 +18,7 @@ module.exports = function(RED) {
                     done(err);
                 });
             } else {
-                done({ msg: 'This node need to request data in payload' });
+                done('This node need to request data in payload');
             }
         });
     }
